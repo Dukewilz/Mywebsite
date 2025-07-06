@@ -1,41 +1,980 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dawn News</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="steve.jpg" type="image/x-icon">
-    <link rel="icon" href="steve.jpg" type="image/x-icon">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redawn News - Berita Terkini</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="Gemini_Generated_Image_9gk6ox9gk6ox9gk6.png" type="image/x-icon">
+    <link rel="icon" href="Gemini_Generated_Image_9gk6ox9gk6ox9gk6.png" type="image/x-icon">
+    <style>
+        /* Reset and base */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Top Bar (Header) */
+        .top-bar {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            gap: 15px;
+            font-size: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 1002;
+            flex-wrap: wrap;
+        }
+        .top-bar .menu-icon {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+            flex-shrink: 0;
+        }
+        .top-bar .logo {
+            flex-shrink: 0;
+            padding-right: 15px;
+        }
+        .top-bar .logo h1 {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif; /* Atau 'Open Sans' */
+            font-size: 28px; /* Sesuaikan ukuran */
+            font-weight: 700;
+            color: #e4002b; /* Warna merah */
+            text-transform: uppercase; /* Opsional: REDAWN NEWS */
+            letter-spacing: 1px; /* Opsional: Spasi antar huruf */
+            line-height: 1;
+        }
+        .top-bar form {
+            flex-grow: 1;
+            position: relative;
+            max-width: 450px;
+            display: flex;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .top-bar input[type="search"] {
+            flex-grow: 1;
+            padding: 8px 15px;
+            font-size: 14px;
+            border: none;
+            outline: none;
+            background: none;
+        }
+        .top-bar button[type="submit"] {
+            background: #f0f0f0;
+            border: none;
+            color: #555;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .top-bar button[type="submit"]:hover {
+            background: #e0e0e0;
+        }
+        .top-bar .auth-buttons {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .top-bar .btn {
+            border: 1px solid #e4002b;
+            padding: 6px 12px;
+            border-radius: 4px;
+            color: #e4002b;
+            font-weight: 600;
+            cursor: pointer;
+            background: white;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            font-size: 13px;
+        }
+        .top-bar .btn:hover {
+            background: #e4002b;
+            color: white;
+        }
+        .top-bar .btn.btn-fill {
+            background-color: #e4002b;
+            color: white;
+        }
+        .top-bar .btn.btn-fill:hover {
+            background-color: #c70025;
+        }
+
+        /* Main Navbar */
+        nav.main-nav {
+            background-color: #e4002b;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            position: sticky;
+            top: 52px;
+            z-index: 1001;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        nav.main-nav::-webkit-scrollbar {
+            display: none;
+        }
+        nav.main-nav ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+        nav.main-nav li {
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+        nav.main-nav li:last-child {
+            border-right: none;
+        }
+        nav.main-nav button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: background-color 0.2s ease;
+            font-weight: 500;
+        }
+        nav.main-nav button:hover,
+        nav.main-nav button.active {
+            background-color: #c70025;
+        }
+
+        /* Info ticker below nav */
+        .info-ticker {
+            background: #f7f7f7;
+            color: #555;
+            font-size: 12px;
+            padding: 8px 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 92px;
+            z-index: 1000;
+            scrollbar-width: none;
+        }
+        .info-ticker::-webkit-scrollbar {
+            display: none;
+        }
+        .info-ticker a {
+            color: #e4002b;
+            font-weight: 700;
+            margin-right: 18px;
+            white-space: nowrap;
+        }
+        .info-ticker a:hover {
+            color: #c70025;
+        }
+
+        /* Layout grid */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: grid;
+            grid-template-columns: 160px 1fr 160px;
+            gap: 20px;
+            padding: 0 15px;
+            align-items: start;
+        }
+
+        /* Sidebars */
+        aside.sidebar-left,
+        aside.sidebar-right {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: sticky;
+            top: 130px;
+            z-index: 900;
+            align-self: start;
+        }
+        .sidebar-ad {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px 10px;
+            text-align: center;
+            font-size: 13px;
+            color: #555;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        .sidebar-ad .ad-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .sidebar-ad.button-yellow {
+            background: linear-gradient(180deg, #fce000, #ffc800);
+            color: #333;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 700;
+            padding: 10px 15px;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            font-size: 14px;
+        }
+        .sidebar-ad.button-yellow:hover {
+            background: linear-gradient(180deg, #ffd700, #ffb300);
+        }
+        .sidebar-ad.small-black {
+            background: #333;
+            color: white;
+            padding: 8px 10px;
+            font-weight: 600;
+            border-radius: 5px;
+            font-size: 11px;
+            border: none;
+        }
+        aside.sidebar-left img, aside.sidebar-right img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Main content area */
+        main.content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Top Stories (Horizontal scrollable news) */
+        .top-stories {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: #aaa #f1f1f1;
+        }
+        .top-stories::-webkit-scrollbar {
+            height: 8px;
+        }
+        .top-stories::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        .top-stories::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .story-card {
+            min-width: 200px;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #eee;
+        }
+        .story-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .story-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            display: block;
+        }
+        .story-title {
+            padding: 10px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        /* Main grid for feature and ads */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 20px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .feature-news {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .feature-news .feature-photo {
+            flex-shrink: 0;
+            width: 60%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .feature-news .feature-photo img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+        .feature-news .feature-content {
+            flex-grow: 1;
+        }
+        .feature-news .feature-content h2 {
+            margin-top: 0;
+            font-size: 26px;
+            color: #333;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+        .feature-news .feature-content p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .feature-news .feature-content a {
+            color: #e4002b;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .feature-news .feature-content a:hover {
+            text-decoration: underline;
+        }
+
+        .vertical-ads {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .vertical-ads .ad-block {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            color: #333;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 15px;
+            line-height: 1.4;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .vertical-ads .ad-block.small {
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Different content sections hidden/shown */
+        .news-section {
+            display: none; /* Default hidden */
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .news-section.active {
+            display: block; /* Shown when active */
+        }
+        .news-section h2 {
+            font-size: 24px;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e4002b;
+            padding-bottom: 10px;
+            font-weight: 700;
+        }
+        /* News articles grid for the section */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .news-article {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .news-article:hover {
+            box-shadow: 0 4px 13px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+        .news-article img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+        .news-article .headline {
+            padding: 12px 15px;
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+            line-height: 1.4;
+        }
+        /* Style for Sports Station Ad */
+        .sports-ad {
+            background-color: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .sports-ad .ad-label {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .sports-ad .ad-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e4002b;
+            margin-bottom: 15px;
+        }
+
+        .sports-ad .ad-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .sports-ad .ad-item {
+            flex: 1 1 45%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .sports-ad .ad-item img {
+            max-width: 100%;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 5px;
+        }
+
+        .sports-ad .ad-item p {
+            font-size: 13px;
+            color: #333;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .sports-ad button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 0 10px;
+                gap: 15px;
+            }
+            aside.sidebar-left,
+            aside.sidebar-right {
+                display: none;
+            }
+            .top-bar {
+                padding: 8px 15px;
+            }
+            .main-grid {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            .feature-news {
+                flex-direction: column;
+            }
+            .feature-news .feature-photo {
+                width: 100%;
+            }
+            .feature-news .feature-photo img {
+                height: 200px;
+            }
+            .feature-news .feature-content h2 {
+                font-size: 22px;
+            }
+            .news-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+            .news-article img {
+                height: 140px;
+            }
+            .news-section {
+                padding: 15px;
+            }
+            .sports-ad {
+                margin: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            .top-bar .menu-icon {
+                display: block;
+                order: 1;
+            }
+            .top-bar .logo {
+                order: 2;
+                margin-left: 10px;
+                padding-right: 0;
+            }
+            .top-bar form {
+                order: 4;
+                flex-basis: 100%;
+                max-width: 100%;
+            }
+            .top-bar .auth-buttons {
+                order: 3;
+                margin-left: auto;
+            }
+            nav.main-nav {
+                top: 50px;
+                justify-content: flex-start;
+            }
+            .info-ticker {
+                top: 88px;
+            }
+            .story-card {
+                min-width: 180px;
+            }
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+            .news-article img {
+                height: 120px;
+            }
+            .sports-ad .ad-items {
+                flex-direction: column;
+            }
+            .sports-ad .ad-item {
+                flex: none;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar">
-    <div class="container">
-        <a href="index.html" class="logo">Dawn News</a>
-        <ul class="nav-links">
-            <li><a href="#">Beranda</a></li>
-            <li><a href="#">Politik</a></li>
-            <li><a href="#">Ekonomi</a></li>
-            <li><a href="#">Olahraga</a></li>
-            <li><a href="#">Teknologi</a></li>
-            <li><a href="#">Hiburan</a></li>
-        </ul>
-        <div class="search-box">
-            <input type="text" placeholder="Cari berita...">
-            <button type="submit">Cari</button>
-        </div>
+
+<div class="top-bar" role="banner" aria-label="Top Bar">
+    <div class="menu-icon">&#9776;</div>
+    <a href="#" class="logo" aria-label="Redawn News">
+        <h1>Redawn News</h1>
+    </a>
+    <form role="search" aria-label="Cari berita di Redawn News">
+        <input type="search" name="q" placeholder="Cari berita, artikel, topik..." aria-label="Kolom pencarian berita" />
+        <button type="submit" aria-label="Cari">
+            <svg fill="#555" height="18" width="18" viewBox="0 0 24 24">
+                <path d="M10 18c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm7.707 1.293-4.387-4.387a6.966 6.966 0 0 0 1.414-4.243c0-3.866-3.134-7-7-7s-7 3.134-7 7 3.134 7 7 7a6.966 6.966 0 0 0 4.243-1.414l4.387 4.387a1 1 0 0 0 1.414-1.414z"/>
+            </svg>
+        </button>
+    </form>
+    <div class="auth-buttons">
+        <button class="btn" type="button" aria-label="Daftar MPC">Sign up</button>
+        <button class="btn btn-fill" type="button" aria-label="Masuk">Login</button>
     </div>
+</div>
+
+<nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <ul>
+        <li><button class="nav-btn active" data-target="home" aria-current="page">Home</button></li>
+        <li><button class="nav-btn" data-target="berita">Berita</button></li>
+        <li><button class="nav-btn" data-target="jabodetabek">Jabodetabek</button></li>
+        <li><button class="nav-btn" data-target="internasional">Internasional</button></li>
+        <li><button class="nav-btn" data-target="hukum">Hukum</button></li>
+        <li><button class="nav-btn" data-target="politik">Politik</button></li>
+        <li><button class="nav-btn" data-target="kolom">Kolom</button></li>
+        <li><button class="nav-btn" data-target="blakblakan">Terbaru</button></li>
+        <li><button class="nav-btn" data-target="prokontra">Pro Kontra</button></li>
+        <li><button class="nav-btn" data-target="infografis">Infografis</button></li>
+        <li><button class="nav-btn" data-target="foto">Foto</button></li>
+        <li><button class="nav-btn" data-target="video">Video</button></li>
+        <li><button class="nav-btn" data-target="indeks">Indeks</button></li>
+    </ul>
 </nav>
 
-<section class="hero-section">
-    <div class="container">
-        <div class="main-news">
-            <img src="images/topik-terkini.jpg" alt="Gambar Topik Terkini">
-            <h2>Judul Berita Paling Penting Hari Ini</h2>
-            <p>Ringkasan singkat tentang berita terkini yang paling menarik perhatian pembaca.</p>
-            <a href="#" class="read-more">Baca Selengkapnya</a>
+<div class="info-ticker" aria-live="polite" aria-atomic="true">
+    <a href="#" tabindex="-1">Advertisement</a>
+    <a href="#" tabindex="-1">Terpopuler</a>
+    <a href="#" tabindex="-1">Daerah ▼</a>
+    <a href="#" tabindex="-1">Hoax or Not</a>
+    <a href="#" tabindex="-1">Suara Pembaca</a>
+    <a href="#" tabindex="-1">Sybau Awards 2025*</a>
+    <a href="#" tabindex="-1">Melindungi Tuan buas*</a>
+    <a href="#" tabindex="-1">Adhyaksa Awards 2025*</a>
+</div>
+
+<div class="container" role="main">
+    <aside class="sidebar-left" aria-label="Iklan dan sponsor kiri">
+        <div class="sidebar-ad">
+            <div class="ad-title">DICARI 15 ORANG UNTUK MERASAKAN PENGALAMAN RIDING PREMIUM BARENG NMAX TERBARU!</div>
         </div>
-    </div>
-</section>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a9476b56-e464-44ff-af90-ac2208a461d0.png"
+             alt="Tiga pengendara motor dengan helm lengkap sedang parkir berjajar di jalan kota yang terang."
+             onerror="this.style.display='none';"/>
+        <button class="sidebar-ad button-yellow" tabindex="0" role="button">CARANYA KLIK DI SINI</button>
+        <div class="sidebar-ad small-black">MOTOR DISEDIAKAN PANITIA</div>
+    </aside>
+
+    <main class="content-area">
+        <section class="news-section active" id="home" tabindex="0" aria-label="Berita Home">
+            <div class="top-stories" aria-label="Berita utama di home">
+                <article class="story-card" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/07501621-fcaa-4c0d-b4b9-017ad9c0e32b.png" alt="Kebakaran besar di sebuah pom bensin di pinggiran kota Roma dengan asap hitam tebal membubung" onerror="this.style.display='none';" />
+                    <div class="story-title">Ledakan Dahsyat Guncang Pom Bensin di Pinggiran Roma, 45 Orang Luka-luka</div>
+                </article>
+                <article class="story-card" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fa0c68bd-7edd-426a-9f3b-225af5c8667f.png" alt="Gambar uang kertas Rupiah dan dokumen" onerror="this.style.display='none';" />
+                    <div class="story-title">BSU Belum Cair? Ini Arti Notifikasi dan Cara Cek Status Bantuan</div>
+                </article>
+                <article class="story-card" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0d2c50ae-67ed-439c-a941-c186a798de06.png" alt="Tangan seseorang yang diborgol rantai warna perak" onerror="this.style.display='none';" />
+                    <div class="story-title">Pembunuh Notaris Wanita yang Tewas Terikat di Sungai Citarum Ditangkap!</div>
+                </article>
+                <article class="story-card" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1256311e-2146-4255-9169-cfdf60d4b891.png" alt="Menteri dan diplomat sedang berjalan resmi dengan latar belakang gedung pemerintahan" onerror="this.style.display='none';" />
+                    <div class="story-title">Indroyono Soesilo Usai Uji Kelayakan Calon Dubes AS: Doain Dulu, Masih Proses</div>
+                </article>
+                <article class="story-card" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5172c9d7-ae14-4e23-9f0a-a7827b174c7e.png" alt="Sekelompok guru dan murid sedang berpose di halaman sekolah dengan keceriaan" onerror="this.style.display='none';" />
+                    <div class="story-title">Gus Ipul Ungkap 100 Sekolah Rakyat Dibuka 14 Juli, Tampung 9.700 Siswa</div>
+                </article>
+            </div>
+
+            <div class="main-grid" aria-label="Berita utama dan iklan">
+                <div class="feature-news">
+                    <div class="feature-photo" tabindex="0" aria-label="Foto utama berita Putin dan Trump">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2025/05/20/presiden-as-donald-trump-klaim-vladimir-putin-siap-berunding-1747736714872_169.jpeg?w=650&q=90" alt="Donald trump dan Putin" onerror="this.style.display='none';" />
+                    </div>
+                    <div class="feature-content">
+                        <h2>Putin dan Trump Bahas Masa Depan Hubungan Internasional di Pertemuan Rahasia</h2>
+                        <p>Dalam pertemuan yang belum dikonfirmasi secara resmi, kedua pemimpin dunia ini dilaporkan mendiskusikan berbagai isu krusial yang dapat membentuk lanskap geopolitik global.</p>
+                        <a href="#">Baca Selengkapnya &#x2192;</a>
+                    </div>
+                </div>
+                <aside class="sports-ad">
+                    <span class="ad-label">ADVERTISEMENT</span>
+                    <p class="ad-title">SPORTS STATION</p>
+                    <div class="ad-items">
+                        <div class="ad-item">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTffHApSjdWwTISam1g3B24pLKOVzCSMK3w2g&s" alt="Sepatu Olahraga">
+                            <p>Sneakers Kasual</p>
+                        </div>
+                        <div class="ad-item">
+                            <img src="https://down-id.img.susercontent.com/file/dc1d30fb7cee0a9d2146c2f2a6263c29" alt="Tas Olahraga">
+                            <p>Tas Gym Serbaguna</p>
+                        </div>
+                        <div class="ad-item">
+                            <img src="https://i1.sndcdn.com/artworks-KzAmXBa3SdcpZSzj-bSjkgA-t500x500.jpg" alt="Botol Minum">
+                            <p>Botol Minum Sport</p>
+                        </div>
+                        <div class="ad-item">
+                            <img src="https://i1.sndcdn.com/artworks-RecvVGtwh1i1Tkp2-5cTWNg-t500x500.jpg" alt="Sepatu Lari">
+                            <p>Sepatu Lari Premium</p>
+                        </div>
+                    </div>
+                    <button>Lihat Koleksi Lengkap</button>
+                </aside>
+            </div>
+        </section>
+
+        <section class="news-section" id="berita" tabindex="0" aria-label="Berita Nasional">
+            <h2>Berita Nasional Terkini</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9fc31334-aca1-4d55-a94d-50a8f29ea814.png" alt="Gedung pemerintahan dengan bendera merah putih berkibar dengan langit biru" />
+                    <div class="headline">Pemerintah Dorong Percepatan Vaksinasi Nasional untuk Capai Herd Immunity</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3640c3f2-e823-473f-89ba-f41ad6b3f7a1.png" alt="Suasana rapat kabinet dengan para pejabat mengenakan jas resmi" />
+                    <div class="headline">Menkeu Paparkan Proyeksi Ekonomi Indonesia di Forum Internasional</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/95cb0e08-7d07-443f-a2af-26ee2a58ee9e.png" alt="Jalan tol baru yang menghubungkan dua kota di daerah pedesaan" />
+                    <div class="headline">Pembangunan Ibu Kota Baru Terus Berlanjut, Target Selesai 2024</div>
+                </article>
+                 <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Berita+Nasional+4" alt="Ilustrasi berita nasional 4" />
+                    <div class="headline">Program Kartu Prakerja Gelombang Terbaru Dibuka, Simak Cara Daftarnya</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Berita+Nasional+5" alt="Ilustrasi berita nasional 5" />
+                    <div class="headline">Kebijakan Baru Transportasi Publik Demi Kurangi Kemacetan Kota Besar</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="jabodetabek" tabindex="0" aria-label="Berita Jabodetabek">
+            <h2>Berita Jabodetabek Terbaru</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/34bb64d5-95e5-4ab2-8e2f-bc66de4f9b3b.png" alt="Keramaian jalan protokol di pusat Jakarta dengan lalu lintas padat" />
+                    <div class="headline">Proyek MRT Fase 2 Dilanjutkan, Target Rampung Akhir Tahun Depan</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7a6bf5e8-e344-4217-bf76-b48a4967e395.png" alt="Pemukiman penduduk di pinggiran kota dengan suasana sore hari" />
+                    <div class="headline">Pemerintah Kota Bogor Gencarkan Revitalisasi Pasar Tradisional</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/83676003-98b7-4e50-afea-58c4aad8bdca.png" alt="Suasana taman kota penuh pepohonan rindang dan orang yang berolahraga" />
+                    <div class="headline">Festival Budaya Betawi Kembali Digelar di Monas, Meriahkan Jakarta</div>
+                </article>
+                 <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Jabodetabek+4" alt="Ilustrasi berita Jabodetabek 4" />
+                    <div class="headline">Banjir Rob Mengancam Kawasan Pesisir Jakarta Utara, Warga Diminta Waspada</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="internasional" tabindex="0" aria-label="Berita Internasional">
+            <h2>Berita Internasional Pilihan</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/35eef85b-a509-4b9d-8af5-55261c2cc059.png" alt="Pertemuan para pemimpin dunia dalam konferensi diplomatik di ruang konferensi" />
+                    <div class="headline">Krisis Energi Global: Negara-negara Berusaha Mencari Solusi Jangka Panjang</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b3f2b7ed-41f8-4ece-ba24-e30b65505976.png" alt="Suasana perang dengan tank dan tentara di medan pertempuran" />
+                    <div class="headline">PBB Serukan Gencatan Senjata Segera di Zona Konflik Timur Tengah</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Internasional+3" alt="Ilustrasi berita internasional 3" />
+                    <div class="headline">Negara G7 Sepakati Paket Bantuan Ekonomi untuk Negara Berkembang</div>
+                </article>
+                 <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Internasional+4" alt="Ilustrasi berita internasional 4" />
+                    <div class="headline">Perubahan Iklim Mempengaruhi Hasil Panen Global, Ancaman Ketahanan Pangan</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="hukum" tabindex="0" aria-label="Berita Hukum">
+            <h2>Berita Hukum Terkini</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e07ca9c3-b531-47c9-81f2-1bb16d291ec4.png" alt="Gedung pengadilan dengan bendera merah putih dan langit biru" />
+                    <div class="headline">Mahkamah Agung Keluarkan Aturan Baru Terkait Perceraian</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e98c01b9-96b6-419e-8d22-7eb51c8e14aa.png" alt="Palunya hakim di ruang sidang" />
+                    <div class="headline">Sidang Kasus Korupsi E-KTP Dilanjutkan, Saksi Ahli Dihadirkan</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="politik" tabindex="0" aria-label="Berita Politik">
+            <h2>Dinamika Politik Indonesia</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b75b2b6b-7bd0-4b23-b293-9434c51acd94.png" alt="Suasana pidato politik dengan para hadirin mendengarkan dengan serius" />
+                    <div class="headline">Rancangan Undang-Undang Omnibus Law Kesehatan Masuk Tahap Finalisasi</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Politik+2" alt="Ilustrasi politik 2" />
+                    <div class="headline">Koalisi Partai Politik Bahas Strategi Menjelang Pilpres Mendatang</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="kolom" tabindex="0" aria-label="Berita Kolom">
+            <h2>Kolom Opini & Analisis</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5a826b13-a308-48a3-9d0c-20c767d25aca.png" alt="Meja kerja dengan laptop dan catatan opini" />
+                    <div class="headline">Opini: Tantangan Ekonomi Digital dan Peran UMKM di Indonesia</div>
+                </article>
+                <article class="news-article" tabindex="0">
+                    <img src="https://via.placeholder.com/300x160?text=Kolom+2" alt="Ilustrasi kolom 2" />
+                    <div class="headline">Analisis Mendalam: Masa Depan Energi Terbarukan di Asia Tenggara</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="blakblakan" tabindex="0" aria-label="Berita Blak Blakan">
+            <h2>Blak-blakan & Investigasi</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8912b8d7-6aa3-41fb-93df-f2e1862ce679.png" alt="Wawancara jujur dan langsung dengan narasumber penting" />
+                    <div class="headline">Investigasi Eksklusif: Jejak Korupsi di Proyek Megah Ibu Kota</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="prokontra" tabindex="0" aria-label="Berita Pro Kontra">
+            <h2>Pro Kontra Kebijakan</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6e53117d-6e76-45a1-af1d-dddfed3806aa.png" alt="Diskusi perdebatan antara dua pihak yang berbeda pendapat" />
+                    <div class="headline">Debat Panas Antara Akademisi dan Praktisi Mengenai Regulasi AI</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="infografis" tabindex="0" aria-label="Infografis">
+            <h2>Infografis Visual</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/db4da46b-e5ac-46ec-b432-b2561e454b3b.png" alt="Grafik dan diagram perkembangan ekonomi Indonesia" />
+                    <div class="headline">Infografis Data Persebaran Kasus Demam Berdarah di Jabodetabek</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="foto" tabindex="0" aria-label="Foto-foto Berita">
+            <h2>Galeri Foto Pilihan</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3c099cbb-8872-4c87-9614-b096ed8f8605.png" alt="Serangkaian foto kejadian terbaru dari event masyarakat" />
+                    <div class="headline">Foto-foto Indahnya Tradisi Upacara Adat di Pedalaman Sulawesi</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="video" tabindex="0" aria-label="Video Berita">
+            <h2>Video Berita Eksklusif</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/747d404f-6352-4bbb-8b14-b6b495637904.png" alt="Thumbnail video berita terkini tentang politik dan sosial" />
+                    <div class="headline">Video Detik-detik Penyelamatan Korban Longsor di Sumatera Barat</div>
+                </article>
+            </div>
+        </section>
+
+        <section class="news-section" id="indeks" tabindex="0" aria-label="Indeks Berita">
+            <h2>Indeks Berita Lengkap</h2>
+            <div class="news-grid">
+                <article class="news-article" tabindex="0">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/07806976-7498-4751-ac24-05dd159f6f72.png" alt="Indeks daftar judul berita dari berbagai kategori" />
+                    <div class="headline">Daftar Lengkap Berita dan Artikel per Kategori dan Tanggal</div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <aside class="sidebar-right" aria-label="Iklan dan sponsor kanan">
+        <div class="sidebar-ad">
+            <div class="ad-title">DICARI 15 ORANG UNTUK MERASAKAN PENGALAMAN RIDING PREMIUM BARENG NMAX TERBARU!</div>
+        </div>
+        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8492829d-ab1d-462a-864c-77f8fbe5d5ce.png"
+             alt="Dua pengendara motor berhelm hitam sedang berkendara di jalan perkotaan yang terang pada malam hari"
+             onerror="this.style.display='none';"/>
+        <button class="sidebar-ad button-yellow" tabindex="0" role="button">CARANYA KLIK DI SINI</button>
+        <div class="sidebar-ad small-black">MOTOR DISEDIAKAN PANITIA</div>
+    </aside>
+</div>
+
+<script>
+    // Navbar button click handler to toggle news sections
+    const navButtons = document.querySelectorAll("nav.main-nav button.nav-btn");
+    const newsSections = document.querySelectorAll("section.news-section");
+
+    function setActiveNav(targetId) {
+        navButtons.forEach(btn => {
+            if(btn.dataset.target === targetId){
+                btn.classList.add("active");
+                btn.setAttribute("aria-current", "page");
+            } else {
+                btn.classList.remove("active");
+                btn.removeAttribute("aria-current");
+            }
+        });
+        // Show relevant section, hide others
+        newsSections.forEach(section => {
+            if(section.id === targetId){
+                section.classList.add("active");
+                section.focus(); // Fokuskan ke bagian yang aktif untuk aksesibilitas
+            } else {
+                section.classList.remove("active");
+            }
+        });
+    }
+
+    // Attach event listeners to navigation buttons
+    navButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            setActiveNav(btn.dataset.target);
+        });
+    });
+
+    // Optional: prevent default form submit (simulate search)
+    const searchForm = document.querySelector(".top-bar form");
+    searchForm.addEventListener("submit", e => {
+        e.preventDefault();
+        alert("Fungsi pencarian belum tersedia");
+    });
+
+    // Set 'home' as active by default on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        setActiveNav('home');
+    });
+</script>
+
 </body>
 </html>
