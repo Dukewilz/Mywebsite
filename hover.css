@@ -1,0 +1,12 @@
+.feature-link {
+            display: contents; 
+        }
+        
+        .feature-link:hover .feature-photo img {
+            transform: scale(1.03); 
+            transition: transform 0.3s ease-in-out;
+        }
+        .feature-link:hover .feature-content h2 {
+            color: #c70025; 
+            text-decoration: underline;
+        }
